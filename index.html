@@ -1,84 +1,125 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Optimizing generic algorithms</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reset.css">
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/solarized.css">
+	<title>Optimizing generic algorithms</title>
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/monokai.css">
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/solarized.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/monokai.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>Optimizing generic algorithms</h1>
+				<p>Denis Yaroshevskiy</p>
+			</section>
+			<section>
+				<h2>Disclaimers</h2>
+				<ul>
+					<li class="fragment">No affiliation with the mentioned projects</li>
+					<li class="fragment">What I know is pieced together from my experiments and the Internet</li>
+					<li class="fragment">The code worked and then was moved to slides</li>
+				</ul>
+			</section>
+			<section>
+				<h2>About me</h2>
+				<ul>
+					<li class="fragment">Work at Bloomber (talk is not related)</li>
+					<li class="fragment">
+						Have a couple of accepted patches to libc++<br>
+						(and more not accepted)
+					</li>
+					<li class="fragment">
+						A few interesting contributions to<br>
+						Chromium:base library
+					</li>
+					<li class="fragment">Micorbecnhmark algorithms (quite a lot)</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Goals</h2>
+			</section>
+			<section>
+				<h2>Overview</h2>
+				<ul>
+					<li class="fragment">How to time a loop?</li>
+					<li class="fragment"></li>
+				</ul>
+			</section>
+			<section>
 				<section>
-					<h1>Optimizing generic algorithms</h1>
-					<p>Denis Yaroshevskiy</p>
+					<h2>Wonders of micro-benchmarking</h2>
+					<a href="http://quick-bench.com/5qeDZORH24wg3gg03VpsQJliP_4"> live_demo </a>
 				</section>
 				<section>
-					<h2>Disclaimers</h2>
-					<ul>
-						<li class="fragment">No affiliation with the mentioned projects</li>
-						<li class="fragment">What I know is pieced together from my experiments and the Internet</li>
-						<li class="fragment">The code worked and then was moved to slides</li>
-					</ul>
+					<i>Live demo didn't work</i>
+					<img src="img/code_alignment_1.png" alt="Before">
 				</section>
 				<section>
-					<h2>About me</h2>
-					<ul>
-						<li class="fragment">Work at Bloomber (talk is not related)</li>
-						<li class="fragment">
-							Have a couple of accepted patches to libc++<br>
-							(and more not accepted)
-						</li>
-						<li class="fragment">
-							A few interesting contributions to<br>
-							Chromium:base library
-						</li>
-						<li class="fragment">Micorbecnhmark algorithms (quite a lot)</li>
-					</ul>
+					<i>Live demo didn't work</i>
+					<img src="img/code_alignment_2.png" alt="Before">
 				</section>
-				<section>
-					<h2>Goals</h2>
-				</section>
-				<section>
-					<h2>Overview</h2>
-					<ul>
-						<li class="fragment">How to time a loop?</li>
-						<li class="fragment"></li>
-					</ul>
-				</section>
-			</div>
+			</section>
+			<section>
+				<h2>Bad news</h2>
+				<ul>
+					<li class="fragment">Can be as big as 3 times</li>
+					<li class="fragment">No known solution (https://github.com/google/benchmark/issues/461)</li>
+					<li class="fragment">Does happen in production code</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Good news</h2>
+				<ul>
+					<li class="fragment">Difference is huge</li>
+					<li class="fragment">Very unstable</li>
+				</ul>
+			</section>
+			<section>
+				<h2>What to do about it?</h2>
+				<ul>
+					<li class="fragment">One benchmark per binary</li>
+					<li class="fragment">Tweak your code</li>
+					<li class="fragment">On linux there are tools</li>
+					<li class="fragment">Denis Bakhalov: https://easyperf.net/blog/2018/01/18/Code_alignment_issues</li>
+				</ul>
+			</section>
 		</div>
+	</div>
 
-		<script src="js/reveal.js"></script>
+	<script src="js/reveal.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true }
-				]
-			});
-		</script>
-	</body>
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true }
+			]
+		});
+	</script>
+</body>
+
 </html>

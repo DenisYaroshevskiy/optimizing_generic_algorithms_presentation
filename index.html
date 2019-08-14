@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="css/theme/solarized.css">
 
 	<!-- Theme used for syntax highlighting of code -->
-	<link rel="stylesheet" href="lib/css/monokai.css">
+	<link rel="stylesheet" href="lib/css/zenburn.css">
 
 	<!-- Printing and PDF exports -->
 	<script>
@@ -61,7 +61,18 @@
 				<h2>Overview</h2>
 				<ul>
 					<li class="fragment">How to time a loop?</li>
-					<li class="fragment"></li>
+					<li class="fragment">What loop to time?</li>
+				</ul>
+			</section>
+			<section>
+				<h1>How to time a loop</h1>
+			</section>
+			<section>
+				<h2>Use an existing library</h2>
+				<ul>
+					<li class="fragment">Don't write your own timing library</li>
+					<li class="fragment">Whatch Chandler's talk: https://youtu.be/nXaxk27zwlk</li>
+					<li class="fragment">Google benchmark works for me</li>
 				</ul>
 			</section>
 			<section>
@@ -101,6 +112,36 @@
 					<li class="fragment">On linux there are tools</li>
 					<li class="fragment">Denis Bakhalov: https://easyperf.net/blog/2018/01/18/Code_alignment_issues</li>
 				</ul>
+			</section>
+			<section>
+				<h1>What loop to time?</h1>
+			</section>
+			<section>
+				<h2>Benchmarks are not tests</h2>
+				<ul>
+					<li class="fragment">No double checking of correctness</li>
+					<li class="fragment">Take a while to run</li>
+					<li class="fragment">Very difficult to CI</li>
+				</ul>
+			</section>
+			<section>
+				<h2>std::merge</h2>
+				<pre><code class="common system" data-line-numbers>
+template &lt;typename I1,typename I2, typename O, typename P&gt;
+O merge(I1 f1, I1 l1, I2 f2, I2 l2, O o, P p) {
+  for (; f1 != l1; ++o) {
+    if (f2 == l2) return std::copy(f1, l1, o);
+
+    if (p(*f2, *f1)) {
+      *o = *f2; ++f2;
+    } else {
+      *o = *f1; ++f1;
+    }
+  }
+
+  return std::copy(f2, l2, o);
+}
+			</code></pre>
 			</section>
 		</div>
 	</div>

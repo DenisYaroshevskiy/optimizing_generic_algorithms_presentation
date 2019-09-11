@@ -30,19 +30,25 @@
 			<section>
 				<h1>Optimizing generic algorithms</h1>
 				<p>Denis Yaroshevskiy</p>
+				<p>Bloomberg</p>
 			</section>
 			<section>
 				<h2>Disclaimers</h2>
 				<ul>
 					<li class="fragment">No affiliation with the mentioned projects</li>
 					<li class="fragment">What I know is pieced together from my experiments and the Internet</li>
-					<li class="fragment">The code worked and then was moved to slides</li>
+					<li class="fragment">One compiler, one machine</li>
+					<li class="fragment">Beware of bugs and issues</li>
+					<li class="fragment">Some of the statements can be opinionated</li>
 				</ul>
 			</section>
 			<section>
-				<h2>About me</h2>
+				<h2>Goal</h2>
+				<p class="fragment">What can you do if your perfromance bottleneck is a general purpose utilitly</p>
+			</section>
+			<section>
+				<h2>Why listen to me about this?</h2>
 				<ul>
-					<li class="fragment">Work at Bloomber (talk is not related)</li>
 					<li class="fragment">
 						Have a couple of accepted patches to libc++<br>
 						(and more not accepted)
@@ -51,34 +57,30 @@
 						A few interesting contributions to<br>
 						Chromium:base library
 					</li>
-					<li class="fragment">Micorbecnhmark algorithms (quite a lot)</li>
+					<li class="fragment">Microbecnhmark algorithms (quite a lot)</li>
 				</ul>
-			</section>
-			<section>
-				<h2>Goals</h2>
 			</section>
 			<section>
 				<h2>Overview</h2>
 				<ul>
-					<li class="fragment">How to time a loop?</li>
-					<li class="fragment">What loop to time?</li>
+					<li class="fragment">microbenchmarking</li>
+					<li class="fragment">partition_point(lower_bound)</li>
+					<li class="fragment">merge</li>
+					<li class="fragment">stable_sort</li>
 				</ul>
 			</section>
 			<section>
-				<h1>How to time a loop</h1>
-			</section>
-			<section>
-				<h2>Use an existing library</h2>
+				<h2>Microbenchmarking</h2>
 				<ul>
 					<li class="fragment">Don't write your own timing library</li>
-					<li class="fragment">Whatch Chandler's talk: https://youtu.be/nXaxk27zwlk</li>
+					<li class="fragment">Whatch Chandler's talk: "Tuning C++: Benchmarks, and CPUs, and Compilers! Oh My!" https://youtu.be/nXaxk27zwlk</li>
 					<li class="fragment">Google benchmark works for me</li>
 				</ul>
 			</section>
 			<section>
 				<section>
-					<h2>Wonders of micro-benchmarking</h2>
-					<a href="http://quick-bench.com/5qeDZORH24wg3gg03VpsQJliP_4"> live_demo </a>
+					<h2>Biggest problem of microbenchmarking</h2>
+					<a href="http://quick-bench.com/7G_1xbu9SQSW96IZVJIN1M6oDSY"> live_demo </a>
 				</section>
 				<section>
 					<i>Live demo didn't work</i>
@@ -87,6 +89,10 @@
 				<section>
 					<i>Live demo didn't work</i>
 					<img src="img/code_alignment_2.png" alt="Before">
+				</section>
+				<section>
+					<i>Live demo didn't work</i>
+					<img src="img/code_alignment_3.png" alt="Before">
 				</section>
 			</section>
 			<section>

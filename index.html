@@ -3,7 +3,8 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 	<title>Optimizing generic algorithms</title>
 
@@ -36,7 +37,8 @@
 				<h2>Disclaimers</h2>
 				<ul>
 					<li class="fragment">No affiliation with the mentioned projects</li>
-					<li class="fragment">What I know is pieced together from my experiments and the Internet</li>
+					<li class="fragment">What I know is pieced together from my
+						experiments and the Internet</li>
 					<li class="fragment">One compiler, one machine</li>
 					<li class="fragment">Beware of bugs and issues</li>
 					<li class="fragment">Some of the statements can be opinionated</li>
@@ -44,7 +46,8 @@
 			</section>
 			<section>
 				<h2>Goal</h2>
-				<p class="fragment">What can you do if your perfromance bottleneck is a general purpose utilitly</p>
+				<p class="fragment">What can you do if your perfromance bottleneck is a
+					general purpose utilitly</p>
 			</section>
 			<section>
 				<h2>Why listen to me about this?</h2>
@@ -73,14 +76,16 @@
 				<h2>Microbenchmarking</h2>
 				<ul>
 					<li class="fragment">Don't write your own timing library</li>
-					<li class="fragment">Whatch Chandler's talk: "Tuning C++: Benchmarks, and CPUs, and Compilers! Oh My!" https://youtu.be/nXaxk27zwlk</li>
+					<li class="fragment">Whatch Chandler's talk: "Tuning C++: Benchmarks,
+						and CPUs, and Compilers! Oh My!" https://youtu.be/nXaxk27zwlk</li>
 					<li class="fragment">Google benchmark works for me</li>
 				</ul>
 			</section>
 			<section>
 				<section>
 					<h2>Biggest problem of microbenchmarking</h2>
-					<a href="http://quick-bench.com/7G_1xbu9SQSW96IZVJIN1M6oDSY"> live_demo </a>
+					<a href="http://quick-bench.com/7G_1xbu9SQSW96IZVJIN1M6oDSY">
+						live_demo </a>
 				</section>
 				<section>
 					<i>Live demo didn't work</i>
@@ -99,7 +104,8 @@
 				<h2>Bad news</h2>
 				<ul>
 					<li class="fragment">Can be as big as 4 times</li>
-					<li class="fragment">No known solution (https://github.com/google/benchmark/issues/461)</li>
+					<li class="fragment">No known solution
+						(https://github.com/google/benchmark/issues/461)</li>
 					<li class="fragment">Does happen in production code</li>
 				</ul>
 			</section>
@@ -114,9 +120,10 @@
 				<h2>What to do about it?</h2>
 				<ul>
 					<li class="fragment">One benchmark per binary</li>
-					<li class="fragment">Tweak your code (run for similar types)	</li>
+					<li class="fragment">Tweak your code (run for similar types) </li>
 					<li class="fragment">On linux there are tools</li>
-					<li class="fragment">Denis Bakhalov: https://easyperf.net/blog/2018/01/18/Code_alignment_issues</li>
+					<li class="fragment">Denis Bakhalov:
+						https://easyperf.net/blog/2018/01/18/Code_alignment_issues</li>
 				</ul>
 			</section>
 			<section>
@@ -141,7 +148,30 @@
 				<ul>
 					<li class="fragment">Pick 1 or 2 "fundamental" benchmarks</li>
 					<li class="fragment">Add a benchmark for your optimization</li>
-					<li class="fragment">Add benchmarks that could have been negatively affected</li>
+					<li class="fragment">Add benchmarks that could have been negatively
+						affected</li>
+				</ul>
+			</section>
+			<section>
+				<section>
+					<h2>Suggested optimization</h2>
+					<iframe width="800px" height="600px"
+						src="https://gcc.godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(fontScale:1.5479341055999998,j:1,lang:c%2B%2B,source:'%23include+%22https://raw.githubusercontent.com/DenisYaroshevskiy/algorithm_dumpster/058cb99a32c7cfad06f24d5db16a1c99d205fbcd/src/algo/half_positive.h%22%0A%0Aint*+middle(int*+f,+int*+l)+%7B%0A++return+f+%2B+(l+-+f)+/+2%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:100,l:'4',m:35.647530040053404,n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:clang800,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',libraryCode:'1',trim:'1'),fontScale:1.2899450879999999,lang:c%2B%2B,libs:!(),options:'-O3+--std%3Dc%2B%2B17',source:1),l:'5',n:'0',o:'x86-64+clang+8.0.0+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),header:(),l:'4',m:64.35246995994659,n:'0',o:'',s:0,t:'0')),l:'3',n:'0',o:'',t:'0')),version:4"></iframe>
+				</section>
+				<section>
+					<h2>Suggested optimization (no CE)</h2>
+					<img src="img/middle_ce_1.png" alt="Before">
+				</section>
+				<section>
+					<h2>Suggested optimization (no CE)</h2>
+					<img src="img/middle_ce_2.png" alt="Before">
+				</section>
+			</section>
+			<section>
+				<h2>What did we affect?</h2>
+				<ul>
+					<li class="fragment">Non templated operations</li>
+					<li class="fragment">Binary size (-2 instructions)</li>
 				</ul>
 			</section>
 			<section>

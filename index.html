@@ -98,7 +98,7 @@
 			<section>
 				<h2>Bad news</h2>
 				<ul>
-					<li class="fragment">Can be as big as 3 times</li>
+					<li class="fragment">Can be as big as 4 times</li>
 					<li class="fragment">No known solution (https://github.com/google/benchmark/issues/461)</li>
 					<li class="fragment">Does happen in production code</li>
 				</ul>
@@ -114,20 +114,34 @@
 				<h2>What to do about it?</h2>
 				<ul>
 					<li class="fragment">One benchmark per binary</li>
-					<li class="fragment">Tweak your code</li>
+					<li class="fragment">Tweak your code (run for similar types)	</li>
 					<li class="fragment">On linux there are tools</li>
 					<li class="fragment">Denis Bakhalov: https://easyperf.net/blog/2018/01/18/Code_alignment_issues</li>
 				</ul>
 			</section>
 			<section>
-				<h1>What loop to time?</h1>
+				<h1>partition_point</h1>
+				<h2>(lower_bound)</h2>
 			</section>
 			<section>
-				<h2>Benchmarks are not tests</h2>
+				<h2>What affects perfromance of a binary search?</h2>
 				<ul>
-					<li class="fragment">No double checking of correctness</li>
-					<li class="fragment">Take a while to run</li>
-					<li class="fragment">Very difficult to CI</li>
+					<li class="fragment">Range size</li>
+					<li class="fragment">Which element we are looking for?</li>
+					<li class="fragment">Predicate</li>
+					<li class="fragment">Distribution of data</li>
+					<li class="fragment">Non templated operations</li>
+					<li class="fragment">Different iterator types</li>
+					<li class="fragment">Cache locality of data</li>
+					<li class="fragment">Binary size</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Start with an optimization</h2>
+				<ul>
+					<li class="fragment">Pick 1 or 2 "fundamental" benchmarks</li>
+					<li class="fragment">Add a benchmark for your optimization</li>
+					<li class="fragment">Add benchmarks that could have been negatively affected</li>
 				</ul>
 			</section>
 			<section>

@@ -15,10 +15,18 @@
  * limitations under the License.
  */
 
-function transformMeasurementURLs(benchDescription, type) {
+function transformMeasurementURLs(filter, benchDescription, type) {
   console.log(type);
   benchDescription.general.title =
     benchDescription.general.title.replace('{}', type);
+  benchDescription.measurements =
+    benchDescription.measurements.filter((m) => {
+      if (filter.indexOf(m.name) !== -1) return true;
+      if (benchDescription.general.baseline) {
+        return m.name == benchDescription.general.baseline;
+      }
+      return false;
+    });
   benchDescription.measurements = benchDescription.measurements.map(
     (m) => {
       m.url = ALGORITHM_DUMPSTER_URL + m.url.replace('{}', type);
@@ -28,6 +36,9 @@ function transformMeasurementURLs(benchDescription, type) {
   return benchDescription;
 }
 
-async function visualizeTimings(divId, template, types) {
-  visualizeBecnhmarksForTypes(divId, template, types, transformMeasurementURLs);
+async function visualizeTimings(divId, template, types, filter) {
+  visualizeBecnhmarksForTypes(divId, template, types,
+    (benchDescription, type) => {
+      return transformMeasurementURLs(filter, benchDescription, type);
+    });
 }

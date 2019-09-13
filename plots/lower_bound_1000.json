@@ -1,12 +1,24 @@
 {
-  "base": "plots/lower_bound_base.json",
+"base": "plots/lower_bound_base.json",
   "general": {
     "title": "lower bound {} 1000"
   },
   "measurements": [
     {
+      "name": "algo_lower_bound_linear",
+      "url": "data/lower_bound_{}_1000/algo_lower_bound_linear.json"
+    },
+    {
+      "name": "algo_lower_bound_biased",
+      "url": "data/lower_bound_{}_1000/algo_lower_bound_biased.json"
+    },
+    {
       "name": "algo_lower_bound",
       "url": "data/lower_bound_{}_1000/algo_lower_bound.json"
+    },
+    {
+      "name": "algo_lower_bound_biased_expensive_cmp",
+      "url": "data/lower_bound_{}_1000/algo_lower_bound_biased_expensive_cmp.json"
     },
     {
       "name": "std_lower_bound",

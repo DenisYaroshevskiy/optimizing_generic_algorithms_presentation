@@ -38,7 +38,7 @@
       "display_name" : "algo::merge_biased_second"
     },
     "algo_merge_expensive_cmp": {
-      "display_name" : "algo::merge_expensive_cmp"
+      "display_name" : "merge_v1"
     },
     "std_merge": {
       "display_name" : "std::merge"

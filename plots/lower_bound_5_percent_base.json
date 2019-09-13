@@ -1,0 +1,6 @@
+{
+  "base" : "plots/lower_bound_base.json",
+  "general": {
+    "slice_percentage" : 5
+  }
+}

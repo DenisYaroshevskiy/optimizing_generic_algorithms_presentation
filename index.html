@@ -19,8 +19,9 @@
 		const ALGORITHM_DUMPSTER_URL = 'https://cdn.jsdelivr.net/gh/DenisYaroshevskiy/algorithm_dumpster@70bb3f44c21f1094f0c769bbafcccc2d662b40a7/';
 	</script>
 	<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/DenisYaroshevskiy/algorithm_dumpster@70bb3f44c21f1094f0c769bbafcccc2d662b40a7/scripts/benchmark_visualization.js"></script>
-  <script type="text/javascript" src="helper_scripts.js"></script>
+	<script type="text/javascript"
+		src="https://cdn.jsdelivr.net/gh/DenisYaroshevskiy/algorithm_dumpster@70bb3f44c21f1094f0c769bbafcccc2d662b40a7/scripts/benchmark_visualization.js"></script>
+	<script type="text/javascript" src="helper_scripts.js"></script>
 
 	<!-- Printing and PDF exports -->
 	<script>
@@ -184,35 +185,164 @@
 			<section>
 				<h2>Basic binary search benchmark</h2>
 				<ul>
-						<li class="fragment">Binary search a 1000 integers</li>
-						<li class="fragment">Parametarized on element to look up</li>
-						<li class="fragment">Double-check on int64 and doubles</li>
-					</ul>
-			</section>
-  		<section>
-					<div id="lb_1000"></div>
-					<script>visualizeTimings('lb_1000', 'plots/lower_bound_1000.json',
-																	 ['int', 'double', 'std_int64_t']);
-					</script>
+					<li class="fragment">Binary search a 1000 integers</li>
+					<li class="fragment">Parametarized on element to look up</li>
+					<li class="fragment">Double-check on int64 and doubles</li>
+				</ul>
 			</section>
 			<section>
-				<h2>std::merge</h2>
-				<pre><code class="common system" data-line-numbers>
-template &lt;typename I1,typename I2, typename O, typename P&gt;
-O merge(I1 f1, I1 l1, I2 f2, I2 l2, O o, P p) {
-  for (; f1 != l1; ++o) {
-    if (f2 == l2) return std::copy(f1, l1, o);
-
-    if (p(*f2, *f1)) {
-      *o = *f2; ++f2;
-    } else {
-      *o = *f1; ++f1;
-    }
-  }
-
-  return std::copy(f2, l2, o);
-}
-			</code></pre>
+				<div id="lb_1000_optimization_results"></div>
+				<script>visualizeTimings('lb_1000_optimization_results',
+						'plots/lower_bound_1000.json',
+						['int', 'double', 'std_int64_t'],
+						['algo_lower_bound', 'std_lower_bound']);
+				</script>
+			</section>
+			<section>
+				<div id="lb_1000_vs_linear"></div>
+				<script>visualizeTimings('lb_1000_vs_linear', 'plots/lower_bound_1000.json',
+						['int', 'double', 'std_int64_t'],
+						['algo_lower_bound', 'algo_lower_bound_linear']);
+				</script>
+			</section>
+			<section>
+				<div id="lb_1000_vs_linear_first_5"></div>
+				<script>visualizeTimings('lb_1000_vs_linear_first_5', 'plots/lower_bound_1000_first_5.json',
+						['int', 'double', 'std_int64_t'],
+						['algo_lower_bound', 'algo_lower_bound_linear']);
+				</script>
+			</section>
+			<section>
+				<div id="lb_biased_first_5"></div>
+				<script>visualizeTimings('lb_biased_first_5',
+						'plots/lower_bound_1000_first_5.json',
+						['int', 'double', 'std_int64_t'],
+						['algo_lower_bound', 'algo_lower_bound_biased', 'algo_lower_bound_linear']);
+				</script>
+			</section>
+			<section>
+				<div id="lb_1000_biased"></div>
+				<script>visualizeTimings('lb_1000_biased', 'plots/lower_bound_1000.json',
+						['int', 'double', 'std_int64_t'],
+						['algo_lower_bound', 'algo_lower_bound_biased']);
+				</script>
+			</section>
+			<section>
+				<h2>Binary search conclustion</h2>
+				<ul>
+					<li class="fragment">half_postive in libc++
+						https://reviews.llvm.org/D53994</li>
+					<li class="fragment">about biased version: blog
+						medium.com/@denis.yaroshevskij/between-linear-and-binary-search-8d21877cfce5
+					</li>
+					<li class="fragment">about biased video:
+						skillsmatter.com/skillscasts/12831-between-linear-and-binary-search
+					</li>
+					<li class="fragment">flat set vs flat_hash_set:
+						https://denisyaroshevskiy.github.io/benchmarking_sets/</li>
+				</ul>
+			</section>
+			<section>
+				<h1>merge</h1>
+			</section>
+			<section>
+				<h2>What affects perfromance of a merge?</h2>
+				<ul>
+					<li class="fragment">Total size</li>
+					<li class="fragment">How elements are mixed</li>
+					<li class="fragment">Comparison</li>
+					<li class="fragment">Non templated operations</li>
+					<li class="fragment">Different iterator types</li>
+					<li class="fragment">Cache locality of data</li>
+					<li class="fragment">Binary size</li>
+				</ul>
+			</section>
+			<section>
+				<iframe width="800px" height="600px"
+					src="https://gcc.godbolt.org/e?readOnly=true&hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(fontScale:1.5479341055999998,j:1,lang:c%2B%2B,source:'%23include+%3Calgorithm%3E%0A%23include+%3Cfunctional%3E%0A%0Atemplate+%3Ctypename+I1,typename+I2,+typename+O,+typename+R%3E%0AO+merge(I1+f1,+I1+l1,+I2+f2,+I2+l2,+O+o,+R+r)+%7B%0A++for+(%3B+f1+!!%3D+l1%3B+%2B%2Bo)+%7B%0A++++if+(f2+%3D%3D+l2)+return+std::copy(f1,+l1,+o)%3B%0A%0A++++if+(r(*f2,+*f1))+%7B%0A++++++*o+%3D+*f2%3B+%2B%2Bf2%3B%0A++++%7D+else+%7B%0A++++++*o+%3D+*f1%3B+%2B%2Bf1%3B%0A++++%7D%0A++%7D%0A++return+std::copy(f2,+l2,+o)%3B%0A%7D%0A%0Aint*+call_merge(int*+f1,+int*+l1,+int*+f2,+int*+l2,+int*+o)+%7B%0A++return+::merge(f1,+l1,+f2,+l2,+o,+std::less%3C%3E%7B%7D)%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:100,l:'4',m:50,n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:clang800,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',libraryCode:'1',trim:'1'),fontScale:1.2899450879999999,lang:c%2B%2B,libs:!(),options:'-O3+--std%3Dc%2B%2B17',source:1),l:'5',n:'0',o:'x86-64+clang+8.0.0+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),header:(),l:'4',m:50,n:'0',o:'',s:0,t:'0')),l:'3',n:'0',o:'',t:'0')),version:4"></iframe>
+			</section>
+			<section>
+				<iframe width="800px" height="600px"
+					src="https://gcc.godbolt.org/e?readOnly=true&hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(fontScale:1.5479341055999998,j:1,lang:c%2B%2B,source:'%23include+%3Calgorithm%3E%0A%23include+%3Cfunctional%3E%0A%0Atemplate+%3Ctypename+I1,+typename+I2,+typename+O,+typename+R%3E%0A//+require+Mergeable%3CI1,+I2,+O,+R%3E%0AO+merge(I1+f1,+I1+l1,+I2+f2,+I2+l2,+O+o,+R+r)+%7B%0A++if+(f1+%3D%3D+l1)+goto+copySecond%3B%0A++if+(f2+%3D%3D+l2)+goto+copyFirst%3B%0A%0A++//+clang-format+off%0A++while+(true)+%7B%0A++++if+(r(*f2,+*f1))+%7B%0A++++++*o+%3D+*f2%3B+%2B%2Bo%3B+%2B%2Bf2%3B+if+(f2+%3D%3D+l2)+goto+copyFirst%3B%0A++++%7D+else+%7B%0A++++++*o+%3D+*f1%3B+%2B%2Bo%3B+%2B%2Bf1%3B+if+(f1+%3D%3D+l1)+goto+copySecond%3B%0A++++%7D%0A++%7D%0A++//+clang-format+on%0A%0AcopySecond:%0A++return+std::copy(f2,+l2,+o)%3B%0AcopyFirst:%0A++return+std::copy(f1,+l1,+o)%3B%0A%7D%0A%0Aint*+call_merge(int*+f1,+int*+l1,+int*+f2,+int*+l2,+int*+o)+%7B%0A++return+::merge(f1,+l1,+f2,+l2,+o,+std::less%3C%3E%7B%7D)%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:100,l:'4',m:50,n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:clang800,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',libraryCode:'1',trim:'1'),fontScale:1.2899450879999999,lang:c%2B%2B,libs:!(),options:'-O3+--std%3Dc%2B%2B17',source:1),l:'5',n:'0',o:'x86-64+clang+8.0.0+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),header:(),l:'4',m:50,n:'0',o:'',s:0,t:'0')),l:'3',n:'0',o:'',t:'0')),version:4"></iframe>
+			</section>
+			<section>
+				<h2>What did we affect?</h2>
+				<ul>
+					<li class="fragment">Non templated operations</li>
+					<li class="fragment">Binary size (+ 11 instructions ~20%)</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Basic merge benchmark</h2>
+				<ul>
+					<li class="fragment">Merge 2000 integers</li>
+					<li class="fragment">Parametarized on 2 sizes (represent distribution)
+					</li>
+					<li class="fragment">Double-check on int64 and doubles</li>
+				</ul>
+			</section>
+			<section>
+				<div id="merge_2000_boundary"></div>
+				<script>visualizeTimings('merge_2000_boundary', 'plots/merge_2000.json',
+						['int', 'double', 'std_int64_t'],
+						['algo_merge_expensive_cmp', 'std_merge']);
+				</script>
+			</section>
+			<section>
+				<iframe width="800px" height="600px"
+					src="https://gcc.godbolt.org/e?readOnly=true&hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(fontScale:1.5479341055999998,j:1,lang:c%2B%2B,source:'%23include+%3Calgorithm%3E%0A%23include+%3Cfunctional%3E%0A%0Atemplate+%3Ctypename+I1,+typename+I2,+typename+O,+typename+R%3E%0A//+require+Mergeable%3CI1,+I2,+O,+R%3E%0AO+merge(I1+f1,+I1+l1,+I2+f2,+I2+l2,+O+o,+R+r)+%7B%0A++if+(f1+%3D%3D+l1)+goto+copySecond%3B%0A++if+(f2+%3D%3D+l2)+goto+copyFirst%3B%0A%0A++//+clang-format+off%0A++while+(true)+%7B%0A++++if+(r(*f2,+*f1))+%7B%0A++++++*o+%3D+*f2%3B+%2B%2Bo%3B+%2B%2Bf2%3B+if+(f2+%3D%3D+l2)+goto+copyFirst%3B%0A++++%7D+else+%7B%0A++++++*o+%3D+*f1%3B+%2B%2Bo%3B+%2B%2Bf1%3B+if+(f1+%3D%3D+l1)+goto+copySecond%3B%0A++++%7D%0A++%7D%0A++//+clang-format+on%0A%0AcopySecond:%0A++return+std::copy(f2,+l2,+o)%3B%0AcopyFirst:%0A++return+std::copy(f1,+l1,+o)%3B%0A%7D%0A%0Aint*+call_merge(int*+f1,+int*+l1,+int*+f2,+int*+l2,+int*+o)+%7B%0A++return+::merge(f1,+l1,+f2,+l2,+o,+std::less%3C%3E%7B%7D)%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:100,l:'4',m:50,n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:clang800,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',libraryCode:'1',trim:'1'),fontScale:1.2899450879999999,lang:c%2B%2B,libs:!(),options:'-O3+--std%3Dc%2B%2B17',source:1),l:'5',n:'0',o:'x86-64+clang+8.0.0+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),header:(),l:'4',m:50,n:'0',o:'',s:0,t:'0')),l:'3',n:'0',o:'',t:'0')),version:4"></iframe>
+			</section>
+			<section>
+				<iframe width="800px" height="600px"
+					src="https://gcc.godbolt.org/e?readOnly=true&hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(fontScale:1.5479341055999998,j:1,lang:c%2B%2B,source:'%23include+%3Calgorithm%3E%0A%23include+%3Cfunctional%3E%0A%0Atemplate+%3Ctypename+I1,+typename+I2,+typename+O,+typename+R%3E%0A//+require+Mergeable%3CI1,+I2,+O,+R%3E%0AO+merge(I1+f1,+I1+l1,+I2+f2,+I2+l2,+O+o,+R+r)+%7B%0A++if+(f1+%3D%3D+l1)+goto+copySecond%3B%0A++if+(f2+%3D%3D+l2)+goto+copyFirst%3B%0A%0A++//+clang-format+off%0A++while(true)+%7B%0A++++if+(r(*f2,+*f1))+goto+takeSecond%3B%0A++++*o+%3D+*f1%3B+%2B%2Bo%3B+%2B%2Bf1%3B+if+(f1+%3D%3D+l1)+goto+copySecond%3B%0A++++goto+nextCheck%3B%0A++takeSecond:%0A++++*o+%3D+*f2%3B+%2B%2Bo%3B+%2B%2Bf2%3B++if+(f2+%3D%3D+l2)+goto+copyFirst%3B%0A++nextCheck:%0A++++if+(r(*f2,+*f1))+goto+takeSecond%3B%0A++++*o+%3D+*f1%3B+%2B%2Bo%3B+%2B%2Bf1%3B+if+(f1+%3D%3D+l1)+goto+copySecond%3B%0A++%7D%0A++//+clang-format+on%0A%0AcopySecond:%0A++return+std::copy(f2,+l2,+o)%3B%0AcopyFirst:%0A++return+std::copy(f1,+l1,+o)%3B%0A%7D%0A%0Aint*+call_merge(int*+f1,+int*+l1,+int*+f2,+int*+l2,+int*+o)+%7B%0A++return+::merge(f1,+l1,+f2,+l2,+o,+std::less%3C%3E%7B%7D)%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:100,l:'4',m:50,n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:clang800,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',libraryCode:'1',trim:'1'),fontScale:1.2899450879999999,lang:c%2B%2B,libs:!(),options:'-O3+--std%3Dc%2B%2B17',source:1),l:'5',n:'0',o:'x86-64+clang+8.0.0+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),header:(),l:'4',m:50,n:'0',o:'',s:0,t:'0')),l:'3',n:'0',o:'',t:'0')),version:4"></iframe>
+			</section>
+			<section>
+				<h2>What did we affect?</h2>
+				<ul>
+					<li class="fragment">Extra comparison/assignment</li>
+					<li class="fragment">Some iterator depending operations</li>
+					<li class="fragment">Non templated operations</li>
+					<li class="fragment">Binary size for ints (+ 11 instructions ~20%)
+					</li>
+				</ul>
+			</section>
+			<section>
+				<div id="merge_2000_optimized"></div>
+				<script>visualizeTimings('merge_2000_optimized', 'plots/merge_2000.json',
+						['int', 'double', 'std_int64_t'],
+						['algo_merge_expensive_cmp', 'algo_merge', 'std_merge']);
+				</script>
+			</section>
+			<section>
+				<h2>What to do about binary size?</h2>
+				<p class="fragment">We need to benchmark stable_sort</p>
+			</section>
+			<section>
+				<div id="merge_2000_show_copy"></div>
+				<script>visualizeTimings('merge_2000_show_copy', 'plots/merge_2000.json',
+						['int', 'double', 'std_int64_t'],
+						['algo_merge']);
+				</script>
+			</section>
+			<section>
+				<iframe width="800px" height="600px"
+					src="https://gcc.godbolt.org/e?readOnly=true&hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(fontScale:1.5479341055999998,j:1,lang:c%2B%2B,source:'%23include+%22https://gist.githubusercontent.com/DenisYaroshevskiy/11000a1d56430fcb4be0ce5da1b9dc98/raw/72cb5d5b4566d9fd0d83eb56219e88f1e6973326/merge_biased_deps.h%22%0Anamespace+algo+%7B%0A%0Atemplate+%3Ctypename+I1,+typename+I2,+typename+O,+typename+R%3E%0A//+require+Mergeable%3CI1,+I2,+O,+R%3E+%26%26+ForwardIterator%3CI1%3E%0AO+merge_biased_first(I1+f1,+I1+l1,+I2+f2,+I2+l2,+O+o,+R+r)+%7B%0A++if+(f1+%3D%3D+l1)+goto+copySecond%3B%0A++if+(f2+%3D%3D+l2)+goto+copyFirst%3B%0A%0A++while+(true)+%7B%0A++++//+clang-format+off%0A++++if+(r(*f2,+*f1))+goto+takeSecond%3B%0A++++*o+%3D+*f1%3B+%2B%2Bo%3B+%2B%2Bf1%3B+if+(f1+%3D%3D+l1)+goto+copySecond%3B%0A++++goto+nextCheck%3B%0A++takeSecond:%0A++++*o+%3D+*f2%3B+%2B%2Bo%3B+%2B%2Bf2%3B+if+(f2+%3D%3D+l2)+goto+copyFirst%3B%0A++nextCheck:%0A++++if+(r(*f2,+*f1))+goto+takeSecond%3B%0A++++*o+%3D+*f1%3B+%2B%2Bo%3B+%2B%2Bf1%3Bif+(f1+%3D%3D+l1)+goto+copySecond%3B%0A++++if+(r(*f2,+*f1))+goto+takeSecond%3B%0A++++*o+%3D+*f1%3B+%2B%2Bo%3B+%2B%2Bf1%3B+if+(f1+%3D%3D+l1)+goto+copySecond%3B%0A++++if+(r(*f2,+*f1))+goto+takeSecond%3B%0A++++*o+%3D+*f1%3B+%2B%2Bo%3B+%2B%2Bf1%3B+if+(f1+%3D%3D+l1)+goto+copySecond%3B%0A++++//+clang-format+on%0A%0A++++I1+next_f1+%3D+algo::point_closer_to_upper_bound(f1,+l1,+*f2,+r)%3B%0A++++o+%3D+std::copy(f1,+next_f1,+o)%3B%0A++++f1+%3D+next_f1%3B%0A++%7D%0A%0AcopySecond:%0A++return+std::copy(f2,+l2,+o)%3B%0AcopyFirst:%0A++return+std::copy(f1,+l1,+o)%3B%0A%7D%0A%0A%7D%0A%0Aint*+call_merge(int*+f1,+int*+l1,+int*+f2,+int*+l2,+int*+o)+%7B%0A++return+algo::merge_biased_first(f1,+l1,+f2,+l2,+o,+std::less%3C%3E%7B%7D)%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:100,l:'4',m:50,n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:clang800,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',libraryCode:'1',trim:'1'),fontScale:1.2899450879999999,lang:c%2B%2B,libs:!(),options:'-O3+--std%3Dc%2B%2B17',source:1),l:'5',n:'0',o:'x86-64+clang+8.0.0+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),header:(),l:'4',m:50,n:'0',o:'',s:0,t:'0')),l:'3',n:'0',o:'',t:'0')),version:4"></iframe>
+			</section>
+			<section>
+				<div id="merge_biased_first"></div>
+				<script>visualizeTimings('merge_biased_first', 'plots/merge_2000.json',
+						['int', 'double', 'std_int64_t'],
+						['algo_merge', 'algo_merge_biased_first', 'algo_merge_biased_second']);
+				</script>
+			</section>
+			<section>
+				<h2>Merge conclustion</h2>
+				<ul>
+					<li class="fragment"> Denis Bakhalov on branches: https://easyperf.net/blog/2018/07/09/Improving-performance-by-better-code-locality#why-latter-case-is-better</li>
+					<li class="fragment">libc++ patch that didn't land: https://reviews.llvm.org/D63063</li>
+					<li class="fragment">Compiler specific issues</li>
+					<li class="fragment">I have a similar set_union~ish algorithm</li>
+				</ul>
 			</section>
 		</div>
 	</div>

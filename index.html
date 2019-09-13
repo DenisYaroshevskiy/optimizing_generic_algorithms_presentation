@@ -15,6 +15,13 @@
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/zenburn.css">
 
+	<script>
+		const ALGORITHM_DUMPSTER_URL = 'https://cdn.jsdelivr.net/gh/DenisYaroshevskiy/algorithm_dumpster@70bb3f44c21f1094f0c769bbafcccc2d662b40a7/';
+	</script>
+	<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/DenisYaroshevskiy/algorithm_dumpster@70bb3f44c21f1094f0c769bbafcccc2d662b40a7/scripts/benchmark_visualization.js"></script>
+  <script type="text/javascript" src="helper_scripts.js"></script>
+
 	<!-- Printing and PDF exports -->
 	<script>
 		var link = document.createElement('link');
@@ -173,6 +180,20 @@
 					<li class="fragment">Non templated operations</li>
 					<li class="fragment">Binary size (-2 instructions)</li>
 				</ul>
+			</section>
+			<section>
+				<h2>Basic binary search benchmark</h2>
+				<ul>
+						<li class="fragment">Binary search a 1000 integers</li>
+						<li class="fragment">Parametarized on element to look up</li>
+						<li class="fragment">Double-check on int64 and doubles</li>
+					</ul>
+			</section>
+  		<section>
+					<div id="lb_1000"></div>
+					<script>visualizeTimings('lb_1000', 'plots/lower_bound_1000.json',
+																	 ['int', 'double', 'std_int64_t']);
+					</script>
 			</section>
 			<section>
 				<h2>std::merge</h2>

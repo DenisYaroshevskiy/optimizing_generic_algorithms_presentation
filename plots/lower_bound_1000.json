@@ -1,0 +1,16 @@
+{
+  "base": "plots/lower_bound_base.json",
+  "general": {
+    "title": "lower bound {} 1000"
+  },
+  "measurements": [
+    {
+      "name": "algo_lower_bound",
+      "url": "data/lower_bound_{}_1000/algo_lower_bound.json"
+    },
+    {
+      "name": "std_lower_bound",
+      "url": "data/lower_bound_{}_1000/std_lower_bound.json"
+    }
+  ]
+}

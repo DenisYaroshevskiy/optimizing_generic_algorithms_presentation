@@ -46,7 +46,7 @@
   },
   "sort": {
     "algo_stable_sort_sufficient_allocation": {
-      "display_name" : "algo::stable_sort_sufficient_allocation"
+      "display_name" : "algo::stable_sort"
     },
     "std_sort": {
       "display_name" : "std::sort"
@@ -55,7 +55,7 @@
       "display_name" : "std::stable_sort"
     },
     "algo_stable_sort_sufficient_allocation_std_merge": {
-      "display_name" : "algo::stable_sort_sufficient_allocation_std_merge"
+      "display_name" : "algo::stable_sort_std_merge"
     },
     "algo_stable_sort_lifting": {
       "display_name" : "algo::stable_sort_lifting"

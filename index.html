@@ -146,7 +146,6 @@
 					<li class="fragment">Predicate</li>
 					<li class="fragment">Distribution of data</li>
 					<li class="fragment">Non templated operations</li>
-					<li class="fragment">Different iterator types</li>
 					<li class="fragment">Cache locality of data</li>
 					<li class="fragment">Binary size</li>
 				</ul>
@@ -228,7 +227,7 @@
 				</script>
 			</section>
 			<section>
-				<h2>Binary search conclustion</h2>
+				<h2>Binary search conclusions</h2>
 				<ul>
 					<li class="fragment">half_postive in libc++
 						https://reviews.llvm.org/D53994</li>
@@ -246,13 +245,12 @@
 				<h1>merge</h1>
 			</section>
 			<section>
-				<h2>What affects perfromance of a merge?</h2>
+				<h2>What affects perfromance of merge?</h2>
 				<ul>
 					<li class="fragment">Total size</li>
 					<li class="fragment">How elements are mixed</li>
 					<li class="fragment">Comparison</li>
 					<li class="fragment">Non templated operations</li>
-					<li class="fragment">Different iterator types</li>
 					<li class="fragment">Cache locality of data</li>
 					<li class="fragment">Binary size</li>
 				</ul>
@@ -300,9 +298,8 @@
 				<h2>What did we affect?</h2>
 				<ul>
 					<li class="fragment">Extra comparison/assignment</li>
-					<li class="fragment">Some iterator depending operations</li>
 					<li class="fragment">Non templated operations</li>
-					<li class="fragment">Binary size for ints (+ 11 instructions ~20%)
+					<li class="fragment">Binary size for ints (+ 10 instructions ~20%)
 					</li>
 				</ul>
 			</section>
@@ -336,12 +333,117 @@
 				</script>
 			</section>
 			<section>
-				<h2>Merge conclustion</h2>
+				<h2>Merge conclusions</h2>
 				<ul>
-					<li class="fragment"> Denis Bakhalov on branches: https://easyperf.net/blog/2018/07/09/Improving-performance-by-better-code-locality#why-latter-case-is-better</li>
-					<li class="fragment">libc++ patch that didn't land: https://reviews.llvm.org/D63063</li>
+					<li class="fragment"> Denis Bakhalov on branches:
+						https://easyperf.net/blog/2018/07/09/Improving-performance-by-better-code-locality#why-latter-case-is-better
+					</li>
+					<li class="fragment">libc++ patch that didn't land:
+						https://reviews.llvm.org/D63063</li>
 					<li class="fragment">Compiler specific issues</li>
 					<li class="fragment">I have a similar set_union~ish algorithm</li>
+				</ul>
+			</section>
+			<section>
+				<h1>stable_sort</h1>
+			</section>
+			<section>
+				<h2>stable_sort is</h2>
+				<ul>
+					<li class="fragment"> Memory adaptive merge sort </li>
+					<li class="fragment"> Insertion sort (under 8 in libc++) </li>
+					<li class="fragment"> Merge sort </li>
+					<li class="fragment"> Merge sort "rotating middles" </li>
+				</ul>
+			</section>
+			<section>
+				<h2>What affects perfromance of sort?</h2>
+				<ul>
+					<li class="fragment">Total size</li>
+					<li class="fragment">How sorted is data already</li>
+					<li class="fragment">How many duplicates do we have</li>
+					<li class="fragment">Comparison</li>
+					<li class="fragment">Non templated operations</li>
+					<li class="fragment">Cache locality of data</li>
+					<li class="fragment">Binary size</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Basic sort benchmark</h2>
+				<ul>
+					<li class="fragment">Sort 1000 integers</li>
+					<li class="fragment">Parametarized on how sorted they are</li>
+					<li class="fragment">I don't know how to address duplicates</li>
+					<li class="fragment">Double-check against code alignment</li>
+					<li class="fragment">Remove the baseline from benchmark</li>
+				</ul>
+			</section>
+			<section>
+				<h2>From sorted to reverse sorted?</h2>
+				<ul>
+					<li class="fragment">Lexicographical permutations (nth_permutation)
+					</li>
+					<li class="fragment">Biased shuffle (bad) with reverse</li>
+				</ul>
+			</section>
+			<section>
+				<div id="sort_comparing_merge"></div>
+				<script>visualizeTimings('sort_comparing_merge', 'plots/sort_1000.json',
+						['int', 'double', 'std_int64_t'],
+						['algo_stable_sort_sufficient_allocation',
+							'algo_stable_sort_sufficient_allocation_std_merge',
+							'std_sort', 'std_stable_sort']);
+				</script>
+			</section>
+			<section>
+				<div id="sort_comparing_with_std"></div>
+				<script>visualizeTimings('sort_comparing_with_std', 'plots/sort_1000.json',
+						['int', 'double', 'std_int64_t'],
+						['algo_stable_sort_sufficient_allocation',
+							'std_sort', 'std_stable_sort']);
+				</script>
+			</section>
+			<section>
+				<h2>Apply rearrangement</h2>
+				<ul>
+					<li class="fragment"> Rearrange underlying elements based on
+						rearrangement of positions </li>
+					<li class="fragment"> Elements of programming, chapter 10:
+						Rearrangements </li>
+				</ul>
+			</section>
+			<section>
+				<h2> Concept of a position </h2>
+				<ul>
+					<li class="fragment"> Dereferencable </li>
+					<li class="fragment"> Distance between two positions </li>
+					<li class="fragment"> Compare (distance &lt; 0) means less </li>
+				</ul>
+			</section>
+			<section>
+				<h2> Canonical models </h2>
+				<ul>
+					<li class="fragment"> RandomAccessIterator </li>
+					<li class="fragment"> Enumerated pointers </li>
+					<li class="fragment"> Enumerate Forward Iterators </li>
+				</ul>
+			</section>
+			<section>
+				<h2> Possible use-cases </h2>
+				<ul>
+					<li class="fragment"> sorting elements that are expensive to swap
+					</li>
+					<li class="fragment"> sort using parallel array </li>
+					<li class="fragment"> easily use algorithms on an arbitray sub-sets
+						inplace </li>
+				</ul>
+			</section>
+			<section>
+				<h2>Possible bigger types</h2>
+				<ul>
+					<li class="fragment"> fake_url: https://{number}.com </li>
+					<li class="fragment"> fake_url pair </li>
+					<li class="fragment"> Bigger arrays </li>
 				</ul>
 			</section>
 		</div>

@@ -42,3 +42,27 @@ async function visualizeTimings(divId, template, types, filter) {
       return transformMeasurementURLs(filter, benchDescription, type);
     });
 }
+
+function filterCounts(data, filter) {
+  let res = {};
+  let filteredKeys = Object.keys(data).filter((key) => filter.indexOf(key.split('/')[0]) !== -1);
+
+  filteredKeys.forEach((k) => { res[k] = data[k]; });
+  return res;
+}
+
+async function visualizeCounts(divId, jsonBenchmarkDescription, filter) {
+  let benchmarkDescription = await fetch(jsonBenchmarkDescription);
+  benchmarkDescription = await loadBenchmarkDescription(await benchmarkDescription.json());
+  benchmarkDescription.measurements = ALGORITHM_DUMPSTER_URL + benchmarkDescription.measurements;
+  let algorithmSettings = await loadAlgorithmSettings(benchmarkDescription);
+  let data = await fetch(benchmarkDescription.measurements);
+  data = await data.json();
+
+  if (benchmarkDescription.general.baseline) {
+    filter.push(benchmarkDescription.general.baseline);
+  }
+
+  data = filterCounts(data, filter);
+  visualizeCountingBenchmark(divId, benchmarkDescription, algorithmSettings, data);
+}

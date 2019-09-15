@@ -1,0 +1,10 @@
+{
+  "general": {
+    "algorithm_settings_section": "sort",
+    "algorithm_settings_url": "plots/algorithm_settings.json",
+    "baseline": "baseline_sort",
+    "initial_size_position": 0,
+    "divide_y_by_x" : true,
+    "x_log": true
+  }
+}

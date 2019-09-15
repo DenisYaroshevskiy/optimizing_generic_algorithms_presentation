@@ -415,6 +415,79 @@
 						]);
 				</script>
 			</section>
+			<section>
+				<div id="sort_size_100"></div>
+				<script>visualizeTimings('sort_size_100', 'plots/sort_size_100.json',
+						['fake_url', 'fake_url_pair', 'int_20'],
+						['algo_stable_sort_sufficient_allocation',
+							'algo_stable_sort_lifting',
+						]);
+				</script>
+			</section>
+			<section>
+				<h2>Could we/should we do it?</h2>
+				<ul>
+					<li class="fragment">Move is bigger than copy bytes </li>
+					<li class="fragment">I need better implementations </li>
+					<li class="fragment">Pointer based rearrangement is powerful</li>
+				</ul>
+			</section>
+			<section>
+				<h1>Conclusions</h1>
+			</section>
+			<section>
+				<h2>How to optimize a generic component</h2>
+				<ul>
+					<li class="fragment"> Analyze what can affect the perfromance </li>
+					<li class="fragment"> Come up with an idea </li>
+					<li class="fragment"> Build benchmarks for the basic case</li>
+					<li class="fragment"> Build benchmarks for your optimization</li>
+					<li class="fragment"> Build benchmarks for what could have been
+						negatively affected</li>
+					<li class="fragment"> Make the decision on the change</li>
+				</ul>
+			</section>
+			<section>
+				<h2> Some points </h2>
+				<ul>
+					<li class="fragment"> Benchmarks are very error prone </li>
+					<li class="fragment"> Small changes matter </li>
+					<li class="fragment"> std::rotate could be improved </li>
+				</ul>
+			</section>
+			<section>
+				<h2> Where to learn about hardware/tools? </h2>
+				<ul>
+					<li class="fragment"> Multiple blogs (https://easyperf.net/) </li>
+					<li class="fragment"> LLVM conference
+						(https://www.youtube.com/channel/UCv2_41bSAa5Y_8BacJUZfjQ/feed)
+					</li>
+					<li class="fragment"> Matt Godbolt/Niall Douglas talks </li>
+				</ul>
+			</section>
+			<section>
+				<h2> Where to learn about algorithms? </h2>
+				<ul>
+					<li class="fragment"> Alexander Stepanov's courses and EOP
+						(https://www.youtube.com/user/A9Videos) </li>
+					<li class="fragment"> Competitive coding (code_report /
+						geeksforgeeks.org) </li>
+					<li class="fragment"> Andrei Alexandrescu "There's Treasure
+						Everywhere": https://youtu.be/fd1_Miy1Clg </li>
+					<li class="fragment"> Universities cources online </li>
+				</ul>
+			</section>
+			<section>
+				<h2> Thanks to:</h2>
+				<ul>
+					<li> Oleg Fatkhiev </li>
+					<li> Denis Bakhalov </li>
+				</ul>
+			</section>
+			<section>
+				<h2> Questions? </h2>
+				<p> Code: https://github.com/DenisYaroshevskiy/algorithm_dumpster </p>
+			</section>
 		</div>
 	</div>
 

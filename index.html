@@ -16,11 +16,11 @@
 	<link rel="stylesheet" href="lib/css/zenburn.css">
 
 	<script>
-		const ALGORITHM_DUMPSTER_URL = 'https://cdn.jsdelivr.net/gh/DenisYaroshevskiy/algorithm_dumpster@7cdc9c8e9793142bf127cbfde37c68b7d59401a9/';
+		const ALGORITHM_DUMPSTER_URL = 'https://cdn.jsdelivr.net/gh/DenisYaroshevskiy/algorithm_dumpster@53e2e2df5a64bb1bc25944c1de9023cfa2a3b88e/';
 	</script>
 	<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 	<script type="text/javascript"
-		src="https://cdn.jsdelivr.net/gh/DenisYaroshevskiy/algorithm_dumpster@7cdc9c8e9793142bf127cbfde37c68b7d59401a9/scripts/benchmark_visualization.js"></script>
+		src="https://cdn.jsdelivr.net/gh/DenisYaroshevskiy/algorithm_dumpster@53e2e2df5a64bb1bc25944c1de9023cfa2a3b88e/scripts/benchmark_visualization.js"></script>
 	<script type="text/javascript" src="helper_scripts.js"></script>
 
 	<!-- Printing and PDF exports -->
@@ -369,13 +369,13 @@
 				<ul>
 					<li class="fragment"> fake_url: https://{number}.com </li>
 					<li class="fragment"> fake_url pair </li>
-					<li class="fragment"> array of 20 integers </li>
+					<li class="fragment"> noinline_int </li>
 				</ul>
 			</section>
 			<section>
 				<div id="sort_comparing_merge_bigger_types"></div>
 				<script>visualizeTimings('sort_comparing_merge_bigger_types', 'plots/sort_1000.json',
-						['fake_url', 'fake_url_pair', 'int_20'],
+						['fake_url', 'fake_url_pair', 'noinline_int'],
 						['algo_stable_sort_sufficient_allocation',
 							'algo_stable_sort_sufficient_allocation_std_merge',
 						]);
@@ -409,24 +409,25 @@
 			<section>
 				<div id="sort_lifting_1000"></div>
 				<script>visualizeTimings('sort_lifting_1000', 'plots/sort_1000.json',
-						['fake_url', 'fake_url_pair', 'int_20'],
+						['fake_url', 'fake_url_pair', 'noinline_int'],
 						['algo_stable_sort_sufficient_allocation',
-							'algo_stable_sort_lifting',
+							'algo_stable_sort_lifting'
 						]);
 				</script>
 			</section>
 			<section>
 				<div id="sort_size_100"></div>
 				<script>visualizeTimings('sort_size_100', 'plots/sort_size_100.json',
-						['fake_url', 'fake_url_pair', 'int_20'],
+						['fake_url', 'fake_url_pair', 'noinline_int'],
 						['algo_stable_sort_sufficient_allocation',
-							'algo_stable_sort_lifting',
+							'algo_stable_sort_lifting'
 						]);
 				</script>
 			</section>
 			<section>
 				<h2>Could we/should we do it?</h2>
 				<ul>
+					<li class="fragment">Noinline move could be an intrensinc </li>
 					<li class="fragment">Move is bigger than copy bytes </li>
 					<li class="fragment">I need better implementations </li>
 					<li class="fragment">Pointer based rearrangement is powerful</li>
@@ -506,7 +507,7 @@
 			]
 		});
 
-    Reveal.configure({ slideNumber: 'c/t' });
+		Reveal.configure({ slideNumber: 'c/t' });
 	</script>
 </body>
 

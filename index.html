@@ -161,8 +161,7 @@
 			<section>
 				<section>
 					<h2>Suggested optimization</h2>
-					<iframe width="800px" height="600px"
-						src="https://gcc.godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(fontScale:1.5479341055999998,j:1,lang:c%2B%2B,source:'%23include+%22https://raw.githubusercontent.com/DenisYaroshevskiy/algorithm_dumpster/058cb99a32c7cfad06f24d5db16a1c99d205fbcd/src/algo/half_positive.h%22%0A%0Aint*+middle(int*+f,+int*+l)+%7B%0A++return+f+%2B+(l+-+f)+/+2%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:100,l:'4',m:35.647530040053404,n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:clang800,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',libraryCode:'1',trim:'1'),fontScale:1.2899450879999999,lang:c%2B%2B,libs:!(),options:'-O3+--std%3Dc%2B%2B17',source:1),l:'5',n:'0',o:'x86-64+clang+8.0.0+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),header:(),l:'4',m:64.35246995994659,n:'0',o:'',s:0,t:'0')),l:'3',n:'0',o:'',t:'0')),version:4"></iframe>
+					<iframe width="800px" height="600px" src="https://godbolt.org/e?hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(fontScale:1.2899450879999999,j:1,lang:c%2B%2B,source:'%23include+%22https://raw.githubusercontent.com/DenisYaroshevskiy/algorithm_dumpster/98bf2842088bb09ba164c0b32573a36ea6b26487/src/algo/half_nonnegative.h%22%0A%0Aint*+middle(int*+f,+int*+l)+%7B%0A++return+f+%2B+(l+-+f)+/+2%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:100,l:'4',m:35.57567917205693,n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:clang800,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',libraryCode:'1',trim:'1'),fontScale:1.2899450879999999,lang:c%2B%2B,libs:!(),options:'-O2+-std%3Dc%2B%2B17',source:1),l:'5',n:'0',o:'x86-64+clang+8.0.0+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),header:(),l:'4',m:64.42432082794308,n:'0',o:'',s:0,t:'0')),l:'3',n:'0',o:'',t:'0')),version:4"></iframe>
 				</section>
 				<section>
 					<h2>Suggested optimization (no CE)</h2>
@@ -447,7 +446,7 @@
 				<h2> Some points </h2>
 				<ul>
 					<li class="fragment"> Have a reason for your optimization </li>
-					<li class="fragment"> Benchmarks are very error prone </li>
+					<li class="fragment"> Benchmarks are very error-prone </li>
 					<li class="fragment"> Small changes matter </li>
 					<li class="fragment"> std::rotate could be improved </li>
 				</ul>

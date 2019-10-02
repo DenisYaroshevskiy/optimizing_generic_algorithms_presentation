@@ -49,12 +49,12 @@
 						experiments and the Internet</li>
 					<li class="fragment">One compiler, one machine</li>
 					<li class="fragment">Beware of bugs and issues</li>
-					<li class="fragment">Some of the statements can be opinionated</li>
+					<li class="fragment">Some of my statements are opinions</li>
 				</ul>
 			</section>
 			<section>
 				<h2>Goal</h2>
-				<p class="fragment">What can you do if your perfromance bottleneck is a
+				<p class="fragment">What can you do if your performance bottleneck is a
 					general purpose utilitly</p>
 			</section>
 			<section>
@@ -66,9 +66,9 @@
 					</li>
 					<li class="fragment">
 						A few interesting contributions to<br>
-						Chromium:base library
+						Chromium's base library
 					</li>
-					<li class="fragment">Microbecnhmark algorithms (quite a lot)</li>
+					<li class="fragment">Microbenchmark algorithms (quite a lot)</li>
 				</ul>
 			</section>
 			<section>
@@ -113,7 +113,7 @@
 					<li class="fragment">Can be as big as 4 times</li>
 					<li class="fragment">No known solution
 						(https://github.com/google/benchmark/issues/461)</li>
-					<li class="fragment">Does happen in production code</li>
+					<li class="fragment">Happens in production code</li>
 				</ul>
 			</section>
 			<section>
@@ -124,12 +124,12 @@
 				</ul>
 			</section>
 			<section>
-				<h2>What to do about it?</h2>
+				<h2>What to do about it</h2>
 				<ul>
 					<li class="fragment">One benchmark per binary</li>
 					<li class="fragment">Tweak your code (run for similar types) </li>
-					<li class="fragment">On linux there are tools</li>
-					<li class="fragment">Denis Bakhalov:
+					<li class="fragment">On Linux, there are tools</li>
+					<li class="fragment">Denis Bakhvalov:
 						https://easyperf.net/blog/2018/01/18/Code_alignment_issues</li>
 				</ul>
 			</section>
@@ -138,13 +138,13 @@
 				<h2>(lower_bound)</h2>
 			</section>
 			<section>
-				<h2>What affects perfromance of a binary search?</h2>
+				<h2>What affects performance of a binary search?</h2>
 				<ul>
 					<li class="fragment">Range size</li>
-					<li class="fragment">Which element we are looking for?</li>
+					<li class="fragment">Which element are we looking for?</li>
 					<li class="fragment">Predicate</li>
 					<li class="fragment">Distribution of data</li>
-					<li class="fragment">Non templated operations</li>
+					<li class="fragment">Non-templated operations</li>
 					<li class="fragment">Cache locality of data</li>
 					<li class="fragment">Binary size</li>
 				</ul>
@@ -183,8 +183,8 @@
 			<section>
 				<h2>Basic binary search benchmark</h2>
 				<ul>
-					<li class="fragment">Binary search a 1000 integers</li>
-					<li class="fragment">Parametarized on element to look up</li>
+					<li class="fragment">Binary search a 1,000 integers</li>
+					<li class="fragment">Parameterized on element to look up</li>
 					<li class="fragment">Double-check on int64 and doubles</li>
 				</ul>
 			</section>
@@ -197,13 +197,13 @@
 				</script>
 			</section>
 			<section>
-				<h2>Binary search conclusions</h2>
+				<h2>Binary search, PS</h2>
 				<ul>
-					<li class="fragment">half_postive has landed in libc++ </li>
+					<li class="fragment">half_nonnegative has landed in libc++ </li>
 					<li class="fragment">about biased version:
 						medium.com/@denis.yaroshevskij/between-linear-and-binary-search-8d21877cfce5
 					</li>
-					<li class="fragment">flat set vs flat_hash_set:
+					<li class="fragment">flat set vs. flat_hash_set:
 						https://denisyaroshevskiy.github.io/benchmarking_sets/</li>
 				</ul>
 			</section>
@@ -211,13 +211,13 @@
 				<h1>merge</h1>
 			</section>
 			<section>
-				<h2>What affects perfromance of merge?</h2>
+				<h2>What affects performance of merge?</h2>
 				<ul>
 					<li class="fragment">Total size</li>
 					<li class="fragment">How elements are mixed</li>
 					<li class="fragment">Comparison</li>
 					<li class="fragment">Move</li>
-					<li class="fragment">Non templated operations</li>
+					<li class="fragment">Non-templated operations</li>
 					<li class="fragment">Cache locality of data</li>
 					<li class="fragment">Binary size</li>
 				</ul>
@@ -233,15 +233,15 @@
 			<section>
 				<h2>What did we affect?</h2>
 				<ul>
-					<li class="fragment">Non templated operations</li>
+					<li class="fragment">Non-templated operations</li>
 					<li class="fragment">Binary size (+ 11 instructions ~20%)</li>
 				</ul>
 			</section>
 			<section>
 				<h2>Basic merge benchmark</h2>
 				<ul>
-					<li class="fragment">Merge 2000 integers</li>
-					<li class="fragment">Parametarized on 2 sizes (represent distribution)
+					<li class="fragment">Merge 2,000 integers</li>
+					<li class="fragment">Parameterized on 2 sizes (represent distribution)
 					</li>
 					<li class="fragment">Double-check on int64 and doubles</li>
 				</ul>
@@ -265,7 +265,7 @@
 				<h2>What did we affect?</h2>
 				<ul>
 					<li class="fragment">Extra comparison/assignment</li>
-					<li class="fragment">Non templated operations</li>
+					<li class="fragment">Non-templated operations</li>
 					<li class="fragment">Binary size for ints (+ 10 instructions ~20%)
 					</li>
 				</ul>
@@ -289,9 +289,9 @@
 				</script>
 			</section>
 			<section>
-				<h2>Merge conclusions</h2>
+				<h2>Merge, PS</h2>
 				<ul>
-					<li class="fragment"> Denis Bakhalov on branches:
+					<li class="fragment"> Denis Bakhvalov on branches:
 						https://easyperf.net/blog/2018/07/09/Improving-performance-by-better-code-locality#why-latter-case-is-better
 					</li>
 					<li class="fragment">libc++ patch didn't land</li>
@@ -312,7 +312,7 @@
 				</ul>
 			</section>
 			<section>
-				<h2>What affects perfromance of sort?</h2>
+				<h2>What affects performance of sort?</h2>
 				<ul>
 					<li class="fragment">Total size</li>
 					<li class="fragment">How sorted is data already</li>
@@ -327,8 +327,8 @@
 			<section>
 				<h2>Basic sort benchmark</h2>
 				<ul>
-					<li class="fragment">Sort 1000 integers</li>
-					<li class="fragment">Parametarized on how sorted they are</li>
+					<li class="fragment">Sort 1,000 integers</li>
+					<li class="fragment">Parameterized on how sorted they are</li>
 					<li class="fragment">I don't know how to address duplicates</li>
 					<li class="fragment">Double-check against code alignment</li>
 					<li class="fragment">Remove the baseline from benchmark</li>
@@ -422,7 +422,7 @@
 			<section>
 				<h2>Could we/should we do it?</h2>
 				<ul>
-					<li class="fragment">Noinline move could be an intrensinc </li>
+					<li class="fragment">Noinline move could be an intrinsic </li>
 					<li class="fragment">Move is bigger than copy bytes </li>
 					<li class="fragment">I need better implementations </li>
 					<li class="fragment">Pointer based rearrangement is powerful</li>
@@ -434,7 +434,7 @@
 			<section>
 				<h2>How to optimize a generic component</h2>
 				<ul>
-					<li class="fragment"> Analyze what can affect the perfromance </li>
+					<li class="fragment"> Analyze what can affect the performance </li>
 					<li class="fragment"> Come up with an idea </li>
 					<li class="fragment"> Build benchmarks for the basic case</li>
 					<li class="fragment"> Build benchmarks for your optimization</li>
@@ -478,7 +478,7 @@
 				<h2> Thanks to:</h2>
 				<ul>
 					<li> Oleg Fatkhiev </li>
-					<li> Denis Bakhalov </li>
+					<li> Denis Bakhvalov </li>
 				</ul>
 			</section>
 			<section>

@@ -83,9 +83,9 @@
 			<section>
 				<h2>Microbenchmarking</h2>
 				<ul>
-					<li class="fragment">Whatch Chandler's talk: "Tuning C++: Benchmarks,
-						and CPUs, and Compilers! Oh My!" https://youtu.be/nXaxk27zwlk</li>
-					<li class="fragment">Google benchmark works for me</li>
+					<li class="fragment">Whatch Chandler's talk: <a href="https://youtu.be/nXaxk27zwlk">Tuning C++: Benchmarks,
+						and CPUs, and Compilers! Oh My! </a> </li>
+					<li class="fragment">Google Benchmark works for me</li>
 				</ul>
 			</section>
 			<section>
@@ -111,8 +111,7 @@
 				<h2>Bad news</h2>
 				<ul>
 					<li class="fragment">Can be as big as 4 times</li>
-					<li class="fragment">No known solution
-						(https://github.com/google/benchmark/issues/461)</li>
+					<li class="fragment">No known solution <a href="https://github.com/google/benchmark/issues/461">Google Benchmark #461</a></li>
 					<li class="fragment">Happens in production code</li>
 				</ul>
 			</section>
@@ -129,8 +128,7 @@
 					<li class="fragment">One benchmark per binary</li>
 					<li class="fragment">Tweak your code (run for similar types) </li>
 					<li class="fragment">On Linux, there are tools</li>
-					<li class="fragment">Denis Bakhvalov:
-						https://easyperf.net/blog/2018/01/18/Code_alignment_issues</li>
+					<li class="fragment">Denis Bakhvalov:<a href="https://easyperf.net/blog/2018/01/18/Code_alignment_issues">Code alignment issues</a></li>
 				</ul>
 			</section>
 			<section>
@@ -199,11 +197,8 @@
 				<h2>Binary search, PS</h2>
 				<ul>
 					<li class="fragment">half_nonnegative has landed in libc++ </li>
-					<li class="fragment">about biased version:
-						medium.com/@denis.yaroshevskij/between-linear-and-binary-search-8d21877cfce5
-					</li>
-					<li class="fragment">flat set vs. flat_hash_set:
-						https://denisyaroshevskiy.github.io/benchmarking_sets/</li>
+					<li class="fragment"><a href="medium.com/@denis.yaroshevskij/between-linear-and-binary-search-8d21877cfce5">My post</a> about biased version</li>
+					<li class="fragment"><a href="https://denisyaroshevskiy.github.io/benchmarking_sets/">flat set vs. flat_hash_set</a></li>
 				</ul>
 			</section>
 			<section>
@@ -290,8 +285,7 @@
 			<section>
 				<h2>Merge, PS</h2>
 				<ul>
-					<li class="fragment"> Denis Bakhvalov on branches:
-						https://easyperf.net/blog/2018/07/09/Improving-performance-by-better-code-locality#why-latter-case-is-better
+					<li class="fragment"> Denis Bakhvalov's <a href="https://easyperf.net/blog/2018/07/09/Improving-performance-by-better-code-locality#why-latter-case-is-better">post</a> on branches
 					</li>
 					<li class="fragment">libc++ patch didn't land</li>
 					<li class="fragment">Compiler specific issues</li>
@@ -454,23 +448,18 @@
 			<section>
 				<h2> Where to learn about hardware/tools? </h2>
 				<ul>
-					<li class="fragment"> Multiple blogs (https://easyperf.net/) </li>
-					<li class="fragment"> LLVM conference
-						(https://www.youtube.com/channel/UCv2_41bSAa5Y_8BacJUZfjQ/feed)
-					</li>
+					<li class="fragment"> Multiple blogs </li>
+					<li class="fragment"> <a href="//www.youtube.com/channel/UCv2_41bSAa5Y_8BacJUZfjQ/feed">LLVM conference</a></li>
 					<li class="fragment"> Matt Godbolt/Niall Douglas talks </li>
 				</ul>
 			</section>
 			<section>
 				<h2> Where to learn about algorithms? </h2>
 				<ul>
-					<li class="fragment"> Alexander Stepanov's courses and EOP
-						(https://www.youtube.com/user/A9Videos) </li>
-					<li class="fragment"> Competitive coding (code_report /
-						geeksforgeeks.org) </li>
-					<li class="fragment"> Andrei Alexandrescu "There's Treasure
-						Everywhere": https://youtu.be/fd1_Miy1Clg </li>
-					<li class="fragment"> Universities cources online </li>
+					<li class="fragment"> Alexander Stepanov's <a href="https://www.youtube.com/user/A9Videos">courses on A9</a> and EOP</li>
+					<li class="fragment"> Competitive coding (code_report /geeksforgeeks.org) </li>
+					<li class="fragment"> Andrei Alexandrescu <a href="https://youtu.be/fd1_Miy1Clg">"There's Treasure Everywhere"</a></li>
+					<li class="fragment"> University cources online </li>
 				</ul>
 			</section>
 			<section>
@@ -483,6 +472,7 @@
 			<section>
 				<h2> Questions? </h2>
 				<p> Code: https://github.com/DenisYaroshevskiy/algorithm_dumpster </p>
+				<p> Slides: https://denisyaroshevskiy.github.io/optimizing_generic_algorithms_presentation/</p>
 			</section>
 		</div>
 	</div>

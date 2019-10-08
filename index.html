@@ -275,6 +275,13 @@
 				<p class="fragment">We need to benchmark stable_sort</p>
 			</section>
 			<section>
+					<div id="merge_solo"></div>
+					<script>visualizeTimings('merge_solo', 'plots/merge_2000.json',
+							['int', 'double', 'std_int64_t'],
+							['algo_merge']);
+					</script>
+				</section>
+			<section>
 				<div id="merge_biased_first"></div>
 				<script>visualizeTimings('merge_biased_first', 'plots/merge_2000.json',
 						['int', 'double', 'std_int64_t'],

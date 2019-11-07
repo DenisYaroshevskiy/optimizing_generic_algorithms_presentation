@@ -36,10 +36,9 @@
 <body>
 	<div class="reveal">
 		<div class="slides">
-			<section>
+			<section data-transition="none">
 				<h1>Optimizing generic algorithms</h1>
 				<p>Denis Yaroshevskiy</p>
-				<p>Bloomberg</p>
 			</section>
 			<section>
 				<h2>Disclaimers</h2>
@@ -195,8 +194,8 @@
 			</section>
 			<section>
 				<ul>
-					<li class="fragment">half_nonnegative has landed in libc++ </li>
-					<li class="fragment"><a href="medium.com/@denis.yaroshevskij/between-linear-and-binary-search-8d21877cfce5">My post</a> about biased version</li>
+					<li>half_nonnegative has landed in libc++ </li>
+					<li class="fragment"><a href="https://medium.com/@denis.yaroshevskij/between-linear-and-binary-search-8d21877cfce5">Between lienear and binary search</a></li>
 					<li class="fragment"><a href="https://denisyaroshevskiy.github.io/benchmarking_sets/">flat set vs. flat_hash_set</a></li>
 				</ul>
 			</section>
@@ -290,7 +289,7 @@
 			</section>
 			<section>
 				<ul>
-					<li class="fragment"> Denis Bakhvalov's <a href="https://easyperf.net/blog/2018/07/09/Improving-performance-by-better-code-locality#why-latter-case-is-better">post</a> on branches
+					<li> Denis Bakhvalov's <a href="https://easyperf.net/blog/2018/07/09/Improving-performance-by-better-code-locality#why-latter-case-is-better">post</a> on branches
 					</li>
 					<li class="fragment">libc++ patch didn't land</li>
 					<li class="fragment">Compiler specific issues</li>
@@ -485,6 +484,7 @@
 	<script src="js/reveal.js"></script>
 
 	<script>
+		addBloombergCopyRight();
 		// More info about config & dependencies:
 		// - https://github.com/hakimel/reveal.js#configuration
 		// - https://github.com/hakimel/reveal.js#dependencies

@@ -66,3 +66,14 @@ async function visualizeCounts(divId, jsonBenchmarkDescription, filter) {
   data = filterCounts(data, filter);
   visualizeCountingBenchmark(divId, benchmarkDescription, algorithmSettings, data);
 }
+
+function addBloombergCopyRight() {
+  let slides = document.getElementsByTagName("section");
+  console.log('number of slides', slides.length);
+  for (let i = 0; i < slides.length; ++i) {
+    let slide = slides[i];
+    slide.setAttribute("data-background-image", "img/bloomberg-logo-alpha.svg");
+    slide.setAttribute("data-background-size" ,"auto 12%");
+    slide.setAttribute("data-background-position", "bottom 30px left 50px");
+  }
+}
